@@ -51,6 +51,14 @@ jobs:
                 run: |
                   npm install --global docusaurus-init
                   npm install
+
+              - name: Debug File Paths
+                run: |
+                  ls -R
+                  ls -R fetched_docs
+                  ls -l ../docusaurus.config.js
+                
+                
         
               - name: Build Docusaurus Docs
                 run: |
