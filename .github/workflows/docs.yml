@@ -56,12 +56,11 @@ jobs:
                 run: | 
                   ls -R docs
                   ls
-                  ls
         
               - name: Build Docusaurus Docs
                 run: |
                   cd docs
-                  npm run build
+                  npm run build -- --config docs/docusaurus.config.js
         
               - name: Package Docs for External Software
                 run: |
