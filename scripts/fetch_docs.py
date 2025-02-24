@@ -33,9 +33,16 @@ def main():
     clone_path = "fetched_docs"
     output_path = "fetched_docs"
     
+    print(f"Cloning repository from {repo_url} to {clone_path}")
     clone_repo(repo_url, clone_path)
+    print(f"Repository cloned to {clone_path}")
+    
+    print(f"Fetching docs from repository at {clone_path} to {output_path}")
     fetch_docs_from_repo(clone_path, output_path)
+    
+    print(f"Fetching docs from submodules in repository at {clone_path} to {output_path}")
     fetch_docs_from_submodules(clone_path, output_path)
+    print("Fetching completed")
 
 if __name__ == "__main__":
     main()
