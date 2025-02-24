@@ -16,11 +16,11 @@ jobs:
                   submodules: true  # Ensures submodules are initialized
                   fetch-depth: 0
         
-              - name: Install Python Dependencies
-                run: pip install pygit2
+              - name: Make fetch_docs.sh Executable
+                run: chmod +x scripts/fetch_docs.sh
         
               - name: Fetch All Docs
-                run: python scripts/fetch_docs.py
+                run: ./scripts/fetch_docs.sh
         
               - name: Clear Destination Directory
                 run: rm -rf fetched_docs
