@@ -59,8 +59,7 @@ jobs:
         
               - name: Build Docusaurus Docs
                 run: |
-                  cd ../
-                  npm run build
+                  npm run build -- --config docs/docusaurus.config.js
         
               - name: Package Docs for External Software
                 run: |
