@@ -13,7 +13,9 @@ def fetch_docs_from_repo(repo_path, output_path):
             docs_path = os.path.join(root, 'docs')
             relative_path = os.path.relpath(docs_path, repo_path)
             dest_path = os.path.join(output_path, relative_path)
-            shutil.copytree(docs_path, dest_path, dirs_exist_ok=True)
+            if os.path.exists(dest_path):
+                shutil.rmtree(dest_path)
+            shutil.copytree(docs_path, dest_path)
 
 def fetch_docs_from_submodules(repo_path, output_path):
     repo = pygit2.Repository(repo_path)
