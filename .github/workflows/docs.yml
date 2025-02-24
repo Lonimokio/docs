@@ -55,7 +55,7 @@ jobs:
               - name: Build Docusaurus Docs
                 run: |
                   cd fetched_docs
-                  docusaurus build
+                  npm run build
         
               - name: Package Docs for External Software
                 run: |
