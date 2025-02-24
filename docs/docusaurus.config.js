@@ -56,12 +56,12 @@ module.exports = {
             '@docusaurus/preset-classic',
             {
                 docs: {
-                    sidebarPath: require.resolve('./sidebars.js'),
+                    sidebarPath: require.resolve('docs/sidebars.js'),
                     editUrl:
                         'https://github.com/your-org/your-project/edit/main/website/',
                 },
                 theme: {
-                    customCss: require.resolve('./src/css/custom.css'),
+                    customCss: require.resolve('docs/src/css/custom.css'),
                 },
             },
         ],
