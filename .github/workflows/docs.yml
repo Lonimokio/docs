@@ -50,7 +50,12 @@ jobs:
               - name: Install Docusaurus
                 run: |
                   npm install --global docusaurus-init
-                  npm install 
+                  npm install
+                  
+              - name: Debug
+                run: | 
+                  ls -la docs/docs
+                  ls -R 
         
               - name: Build Docusaurus Docs
                 run: |
