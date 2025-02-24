@@ -1,178 +1,68 @@
 name: Build Docusaurus Docs
 
 on:
-    push:
-        branches:
-            - main
-    workflow_dispatch:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
     pull-docs:
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout Main Repository
-              uses: actions/checkout@v4
-              with:
-                submodules: true  # Ensures submodules are initialized
-                fetch-depth: 0
+              - name: Checkout Main Repository
+                uses: actions/checkout@v4
+                with:
+                  submodules: true  # Ensures submodules are initialized
+                  fetch-depth: 0
+        
+              - name: Make fetch_docs.sh Executable
+                run: chmod +x scripts/fetch_docs.sh
+        
+              - name: Fetch All Docs
+                run: ./scripts/fetch_docs.sh
+        
+              - name: Clear Destination Directory
+                run: rm -rf fetched_docs
 
-            - name: Make fetch_docs.sh Executable
-              run: chmod +x scripts/fetch_docs.sh
-
-            - name: Fetch All Docs
-              run: ./scripts/fetch_docs.sh
-
-            - name: Clear Destination Directory
-              run: rm -rf fetched_docs
-
-            - name: Clone Documentation Repository
-              run: git clone https://github.com/pvarki/docker-rasenmaeher-integration.git fetched_docs
-
-            - name: Upload Docs Artifact
-              uses: actions/upload-artifact@v4
-              with:
-                name: docs-raw
-                path: fetched_docs/
+              - name: Clone Documentation Repository
+                run: git clone https://github.com/pvarki/docker-rasenmaeher-integration.git fetched_docs
+        
+              - name: Upload Docs Artifact
+                uses: actions/upload-artifact@v4
+                with:
+                  name: docs-raw
+                  path: fetched_docs/
 
     build:
         runs-on: ubuntu-latest
         needs: pull-docs
         steps:
-            - name: Checkout Documentation Repo
-              uses: actions/checkout@v4
-
-            - name: Download Docs Artifact
-              uses: actions/download-artifact@v4
-              with:
-                name: docs-raw
-                path: fetched_docs/
-
-            - name: Install Docusaurus
-              run: |
-                npm install --global docusaurus-init
-                npm install
-
-            - name: Generate Docusaurus Config
-              run: |
-                cat <<EOF > fetched_docs/docusaurus.config.js
-                module.exports = {
-                    title: 'My Site',
-                    tagline: 'Dinosaurs are cool',
-                    url: 'https://your-docusaurus-test-site.com',
-                    baseUrl: '/',
-                    onBrokenLinks: 'throw',
-                    onBrokenMarkdownLinks: 'warn',
-                    favicon: 'img/favicon.ico',
-                    organizationName: 'facebook', // Usually your GitHub org/user name.
-                    projectName: 'docusaurus', // Usually your repo name.
-                    themeConfig: {
-                        navbar: {
-                            title: 'My Site',
-                            logo: {
-                                alt: 'My Site Logo',
-                                src: 'img/logo.svg',
-                            },
-                            items: [
-                                {
-                                    to: 'docs/',
-                                    activeBasePath: 'docs',
-                                    label: 'Docs',
-                                    position: 'left',
-                                },
-                                {to: 'blog', label: 'Blog', position: 'left'},
-                                {
-                                    href: 'https://github.com/facebook/docusaurus',
-                                    label: 'GitHub',
-                                    position: 'right',
-                                },
-                            ],
-                        },
-                        footer: {
-                            style: 'dark',
-                            links: [
-                                {
-                                    title: 'Docs',
-                                    items: [
-                                        {
-                                            label: 'Style Guide',
-                                            to: 'docs/',
-                                        },
-                                        {
-                                            label: 'Second Doc',
-                                            to: 'docs/doc2/',
-                                        },
-                                    ],
-                                },
-                                {
-                                    title: 'Community',
-                                    items: [
-                                        {
-                                            label: 'Stack Overflow',
-                                            href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-                                        },
-                                        {
-                                            label: 'Discord',
-                                            href: 'https://discordapp.com/invite/docusaurus',
-                                        },
-                                        {
-                                            label: 'Twitter',
-                                            href: 'https://twitter.com/docusaurus',
-                                        },
-                                    ],
-                                },
-                                {
-                                    title: 'More',
-                                    items: [
-                                        {
-                                            label: 'Blog',
-                                            to: 'blog',
-                                        },
-                                        {
-                                            label: 'GitHub',
-                                            href: 'https://github.com/facebook/docusaurus',
-                                        },
-                                    ],
-                                },
-                            ],
-                            copyright: \`Copyright © \${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.\`,
-                        },
-                    },
-                    presets: [
-                        [
-                            '@docusaurus/preset-classic',
-                            {
-                                docs: {
-                                    sidebarPath: require.resolve('./sidebars.js'),
-                                    // Please change this to your repo.
-                                    editUrl:
-                                        'https://github.com/facebook/docusaurus/edit/master/website/',
-                                },
-                                blog: {
-                                    showReadingTime: true,
-                                    // Please change this to your repo.
-                                    editUrl:
-                                        'https://github.com/facebook/docusaurus/edit/master/website/blog/',
-                                },
-                                theme: {
-                                    customCss: require.resolve('./src/css/custom.css'),
-                                },
-                            },
-                        ],
-                    ],
-                };
-                EOF
-
-            - name: Build Docusaurus Docs
-              run: |
-                cd fetched_docs
-                npm run build
-
-            - name: Package Docs for External Software
-              run: |
-                tar -czf built-docs.tar.gz -C fetched_docs/build .
-
-            - name: Upload Built Docs
-              uses: actions/upload-artifact@v4
-              with:
-                name: built-docs
-                path: built-docs.tar.gz
+              - name: Checkout Documentation Repo
+                uses: actions/checkout@v4
+        
+              - name: Download Docs Artifact
+                uses: actions/download-artifact@v4
+                with:
+                  name: docs-raw
+                  path: fetched_docs/
+        
+              - name: Install Docusaurus
+                run: |
+                  npm install --global docusaurus-init
+                  npm install
+        
+              - name: Build Docusaurus Docs
+                run: |
+                  cd fetched_docs
+                  npm run build -- --config ../docusaurus.config.js
+        
+              - name: Package Docs for External Software
+                run: |
+                  tar -czf built-docs.tar.gz -C fetched_docs/build .
+        
+              - name: Upload Built Docs
+                uses: actions/upload-artifact@v4
+                with:
+                  name: built-docs
+                  path: built-docs.tar.gz
