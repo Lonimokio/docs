@@ -50,14 +50,11 @@ jobs:
               - name: Install Docusaurus
                 run: |
                   npm install --global docusaurus-init
-                  npm install
-                  
-              - name: Copy Config File
-                run: cp docusaurus.config.js docs/docs/  
+                  npm install 
         
               - name: Build Docusaurus Docs
                 run: |
-                  cd docs/docs
+                  cd docs
                   npm run build
         
               - name: Package Docs for External Software
