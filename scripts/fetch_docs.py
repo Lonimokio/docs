@@ -16,6 +16,8 @@ def fetch_docs_from_repo(repo_path, output_path):
             if os.path.exists(dest_path):
                 shutil.rmtree(dest_path)
             shutil.copytree(docs_path, dest_path)
+            return  # Exit after finding the first 'docs' directory
+    print(f"No 'docs' directory found in {repo_path}")
 
 def fetch_docs_from_submodules(repo_path, output_path):
     repo = pygit2.Repository(repo_path)
@@ -28,7 +30,7 @@ def main():
     repo_url = "https://github.com/pvarki/docker-rasenmaeher-integration.git"
     clone_path = "fetched_docs"
     output_path = "fetched_docs"
-
+    
     clone_repo(repo_url, clone_path)
     fetch_docs_from_repo(clone_path, output_path)
     fetch_docs_from_submodules(clone_path, output_path)
