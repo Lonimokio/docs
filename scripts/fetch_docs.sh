@@ -1,45 +1,36 @@
-#!/bin/bash
+#!/bin/sh
+set -e
 
-# Set the repository URL
+# Ensure Git automatically rewrites SSH GitHub URLs to HTTPS.
+git config --global url."https://github.com/".insteadOf "git@github.com:"
+
+# Define absolute paths
 REPO_URL="https://github.com/pvarki/docker-rasenmaeher-integration.git"
-
-# Set the destination directory
 DEST_DIR="$GITHUB_WORKSPACE/MainDocs/docs"
+TEMP_DIR="$GITHUB_WORKSPACE/repo_temp"
 
-# Create the destination directory if it doesn't exist
+# Clean up previous temporary clone and destination folder
+rm -rf "$TEMP_DIR"
+rm -rf "$DEST_DIR"
+mkdir -p "$TEMP_DIR"
 mkdir -p "$DEST_DIR"
 
-# Clone the repository (without recursing submodules initially)
-git clone "$REPO_URL" "$DEST_DIR/repo"
-
-# Change directory into the newly cloned repo
-cd "$DEST_DIR/repo"
-
-# Configure git to use HTTPS for all submodules
-git config -f .gitmodules submodule.active.url "https"
-
-# Initialize and update the submodules (now using HTTPS)
+# Clone the repository (using HTTPS) and its submodules
+git clone "$REPO_URL" "$TEMP_DIR"
+cd "$TEMP_DIR"
 git submodule update --init --recursive
 
-# Change directory back to the script's original location
-cd -
-
-# Process the files (same as before)
-find "$DEST_DIR/repo" -type f -name "*.md" -print0 | while IFS= read -r -d $'\0' file; do
-  dir=$(dirname "$file")
-  if find "$dir" -type f -name "*.md" -print -quit | grep -q .; then
-    cp -r "$dir" "$DEST_DIR"
-  else
-    cp "$file" "$DEST_DIR"
-  fi
+# Find all Markdown files and copy them preserving directory structure.
+# This will only copy .md files and create directories as needed.
+find . -type f -name '*.md' | while IFS= read -r mdfile; do
+    # Remove the leading './' from the path
+    rel_path="${mdfile#./}"
+    dest_path="$DEST_DIR/$(dirname "$rel_path")"
+    mkdir -p "$dest_path"
+    cp "$mdfile" "$dest_path/"
 done
 
-# Remove the cloned repository
-rm -rf "$DEST_DIR/repo"
+# Clean up the temporary repository clone
+rm -rf "$TEMP_DIR"
 
-echo "Files processed and saved to $DEST_DIR"
-
-# Remove duplicate files/folders (if any)
-find "$DEST_DIR" -depth -name "repo" -exec rm -rf {} \;
-
-echo "Duplicate 'repo' folders removed"
+echo "Markdown files and folder structure copied to $DEST_DIR"
