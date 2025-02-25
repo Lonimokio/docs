@@ -12,14 +12,13 @@ clone_repo() {
     git clone --recurse-submodules "$REPO_URL" "$CLONE_PATH"
 }
 
-# Copy only .md files and necessary folder structure (Simplified)
+# Copy only .md files and necessary folder structure (Corrected)
 fetch_md_files() {
     local source_path=$1
     local dest_path=$2
 
     find "$source_path" -type f -name '*.md' -print0 | while IFS= read -r -d $'\0' md_file; do
-        # Create relative path using simpler string manipulation
-        relative_path="${md_file#$source_path/}"  # Remove $source_path/ from the beginning
+        relative_path="${md_file#$source_path/}"
         dest_file="$dest_path/$relative_path"
         mkdir -p "$(dirname "$dest_file")"
         cp "$md_file" "$dest_file"
@@ -27,11 +26,12 @@ fetch_md_files() {
     done
 }
 
-# Fetch .md files from submodules
+# Fetch .md files from submodules (Corrected)
 fetch_md_files_from_submodules() {
     git -C "$CLONE_PATH" submodule foreach --recursive '
         submodule_path=$toplevel/$sm_path
-        fetch_md_files "$submodule_path" "'$OUTPUT_PATH'/$sm_path"
+        # Corrected dest_path for submodules:
+        fetch_md_files "$submodule_path" "$OUTPUT_PATH/$sm_path" 
     '
 }
 
