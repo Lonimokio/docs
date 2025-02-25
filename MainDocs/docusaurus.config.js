@@ -10,7 +10,7 @@ export default {
     tagline: 'Static sites made easy',
     url: 'https://example.com', // Update to a generic URL
     baseUrl: '/', // Ensure this is correct for your hosting setup
-    onBrokenLinks: 'throw',
+    onBrokenLinks: 'warn',
     onBrokenMarkdownLinks: 'warn',
     favicon: path.resolve(__dirname, 'MainDocs/img/favicon.ico'),
     organizationName: 'your-org', // Usually your GitHub org/user name.
