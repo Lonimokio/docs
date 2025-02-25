@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 
+WORKSPACE="${GITHUB_WORKSPACE:-$(pwd)}"
 DOCS_DIR="$WORKSPACE/MainDocs/docs"
 CONFIG_FILE="$WORKSPACE/MainDocs/docusaurus.config.js"
 
