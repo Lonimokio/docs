@@ -19,7 +19,7 @@ module.exports = {
             },
             items: [
                 {
-                    to: 'docs/',
+                    to: 'MainDocs/docs/',
                     activeBasePath: 'docs',
                     label: 'Docs',
                     position: 'left',
@@ -41,10 +41,6 @@ module.exports = {
                             label: 'Getting Started',
                             to: 'docs/',
                         },
-                        {
-                            label: 'API Reference',
-                            to: 'docs/api/',
-                        },
                     ],
                 },
             ],
@@ -56,12 +52,12 @@ module.exports = {
             '@docusaurus/preset-classic',
             {
                 docs: {
-                    sidebarPath: require.resolve('docs/sidebars.js'),
+                    sidebarPath: require.resolve('MainDocs/sidebars.js'),
                     editUrl:
                         'https://github.com/your-org/your-project/edit/main/website/',
                 },
                 theme: {
-                    customCss: require.resolve('docs/src/css/custom.css'),
+                    customCss: require.resolve('MainDocs/src/css/custom.css'),
                 },
             },
         ],
