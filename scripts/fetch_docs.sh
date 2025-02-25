@@ -1,32 +1,38 @@
-#!/bin/sh
+#!/bin/bash
 
-# Variables
+# Set the repository URL
 REPO_URL="https://github.com/pvarki/docker-rasenmaeher-integration.git"
+
+# Set the destination directory
 DEST_DIR="$GITHUB_WORKSPACE/MainDocs/docs"
-TEMP_DIR="$GITHUB_WORKSPACE/repo_temp"
 
-# Ensure a clean workspace
-rm -rf "$TEMP_DIR"
-mkdir -p "$TEMP_DIR"
-
-# Clone the repository with submodules using HTTPS
-git clone --recurse-submodules --depth=1 "$REPO_URL" "$TEMP_DIR"
-
-# Convert all submodules to HTTPS
-cd "$TEMP_DIR"
-git submodule foreach --recursive 'git config --file $toplevel/.gitmodules submodule.$name.url ${url/ssh:\/\/git@/https:\/\/} && git submodule sync --recursive && git submodule update --init --recursive'
-
-# Create the destination directory
+# Create the destination directory if it doesn't exist
 mkdir -p "$DEST_DIR"
 
-# Find and copy .md files and their directories
-find "$TEMP_DIR" -type f -name "*.md" | while read -r md_file; do
-    md_dir=$(dirname "$md_file")
-    mkdir -p "$DEST_DIR/${md_dir#$TEMP_DIR/}"
-    cp "$md_file" "$DEST_DIR/${md_file#$TEMP_DIR/}"
+# Clone the repository recursively using HTTPS
+git clone --recursive "$REPO_URL" "$DEST_DIR/repo"
+
+# Process the files
+find "$DEST_DIR/repo" -type f -name "*.md" -print0 | while IFS= read -r -d $'\0' file; do
+  # Get the directory containing the .md file
+  dir=$(dirname "$file")
+
+  # Check if the directory contains ANY .md files (including in subdirectories)
+  if find "$dir" -type f -name "*.md" -print -quit | grep -q .; then
+    # Copy the directory and its contents
+    cp -r "$dir" "$DEST_DIR"
+  else
+    # Copy only the .md file
+    cp "$file" "$DEST_DIR"
+  fi
 done
 
-# Clean up
-rm -rf "$TEMP_DIR"
+# Remove the cloned repository
+rm -rf "$DEST_DIR/repo"
 
-echo "Markdown files and their folders have been copied to $DEST_DIR"
+echo "Files processed and saved to $DEST_DIR"
+
+# Remove duplicate files/folders (if any)
+find "$DEST_DIR" -depth -name "repo" -exec rm -rf {} \;
+
+echo "Duplicate 'repo' folders removed"
