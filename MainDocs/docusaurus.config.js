@@ -57,6 +57,7 @@ export default {
             '@docusaurus/preset-classic',
             {
                 docs: {
+                    path: path.resolve(__dirname, 'MainDocs/docs'),
                     sidebarPath: path.resolve(__dirname, 'MainDocs/sidebar.js'),
                     editUrl:
                         'https://github.com/your-org/your-project/edit/main/website/',
