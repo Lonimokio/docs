@@ -22,12 +22,6 @@ jobs:
               - name: Fetch All Docs
                 run: ${{ github.workspace }}/scripts/fetch_docs.sh
 
-              - name: Make update_docusaurus_config.sh Executable
-                run: chmod +x ${{ github.workspace }}/scripts/update_docusaurus_config.sh
-
-              - name: Update Docusaurus Config
-                run: ${{ github.workspace }}/scripts/update_docusaurus_config.sh
-
               - name: Debug
                 run: | 
                   ls -R ${{ github.workspace }}/MainDocs
