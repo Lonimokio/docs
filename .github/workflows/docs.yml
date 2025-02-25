@@ -26,7 +26,12 @@ jobs:
                 run: rm -rf MainDocs/docs
 
               - name: Clone Documentation Repository
-                run: git clone https://github.com/pvarki/docker-rasenmaeher-integration.git docs/docs
+                run: git clone https://github.com/pvarki/docker-rasenmaeher-integration.git MainDocs/docs
+
+              - name: Debug
+                run: | 
+                  ls -R MainDocs
+                  ls
         
               - name: Upload Docs Artifact
                 uses: actions/upload-artifact@v4
@@ -51,11 +56,6 @@ jobs:
                 run: |
                   npm install --global docusaurus-init
                   npm install
-                  
-              - name: Debug
-                run: | 
-                  ls -R docs
-                  ls
         
               - name: Build Docusaurus Docs
                 run: |
