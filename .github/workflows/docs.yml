@@ -71,7 +71,7 @@ jobs:
                   draft: false
                   prerelease: false
                 env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
             
               - name: Upload Built Docs to Release
                 uses: actions/upload-release-asset@v1
@@ -81,5 +81,5 @@ jobs:
                   asset_name: built-docs.tar.gz
                   asset_content_type: application/gzip
                 env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
             
