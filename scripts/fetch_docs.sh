@@ -27,6 +27,9 @@ git submodule update --init --recursive
 # The --parents flag recreates the entire relative path for each found file.
 find . -type f -iname '*.md' -exec cp --parents {} "$DEST_DIR" \;
 
+# Remove empty directories
+find "$DEST_DIR" -type d -empty -delete
+
 # Clean up temporary clone
 rm -rf "$TEMP_DIR"
 
