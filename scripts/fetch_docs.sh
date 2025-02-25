@@ -2,7 +2,7 @@
 
 REPO_URL="https://github.com/pvarki/docker-rasenmaeher-integration.git"
 CLONE_PATH="$GITHUB_WORKSPACE/tmp_clone"
-OUTPUT_PATH="$GITHUB_WORKSPACE/docs"
+OUTPUT_PATH="$GITHUB_WORKSPACE/MainDocs/docs"
 
 # Clone the main repository using HTTPS
 clone_repo() {
