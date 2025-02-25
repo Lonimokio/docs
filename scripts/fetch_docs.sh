@@ -17,7 +17,7 @@ fetch_md_files() {
     local source_path=$1
     local dest_path=$2
 
-    find "$source_path" -type f -name '*.md' -print0 | while IFS= read -r -d $'\0' md_file; do
+    find "$source_path" -type f -print0 | grep '\.md$' | while IFS= read -r -d $'\0' md_file; do
         relative_path="${md_file#$source_path/}"
         dest_file="$dest_path/$relative_path"
 
