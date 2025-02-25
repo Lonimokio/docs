@@ -17,7 +17,7 @@ fetch_md_files_from_repo() {
     local repo_path=$1
     local output_path=$2
 
-    find "$repo_path" -type f -name '*.md' | while read -r md_file; do
+    find "$repo_path/docs" -type f -name '*.md' | while read -r md_file; do
         relative_path=$(realpath --relative-to="$repo_path" "$md_file")
         dest_path="$output_path/$relative_path"
         mkdir -p "$(dirname "$dest_path")"

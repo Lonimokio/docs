@@ -12,7 +12,7 @@ export default {
     baseUrl: '/', // Ensure this is correct for your hosting setup
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'warn',
-    favicon: 'img/favicon.ico',
+    favicon: path.resolve(__dirname, 'MainDocs/img/favicon.ico'),
     organizationName: 'your-org', // Usually your GitHub org/user name.
     projectName: 'your-project', // Usually your repo name.
     themeConfig: {
@@ -20,11 +20,11 @@ export default {
             title: 'My Static Site',
             logo: {
                 alt: 'Site Logo',
-                src: 'img/logo.svg',
+                src: path.resolve(__dirname, 'MainDocs/img/logo.svg'),
             },
             items: [
                 {
-                    to: path.resolve(__dirname, 'MainDocs/sidebars.js'),
+                    to: path.resolve(__dirname, 'MainDocs/docs'),
                     activeBasePath: path.resolve(__dirname, 'MainDocs/docs'),
                     label: 'Docs',
                     position: 'left',
@@ -57,7 +57,7 @@ export default {
             '@docusaurus/preset-classic',
             {
                 docs: {
-                    sidebarPath: path.resolve(__dirname, 'MainDocs/sidebars.js'),
+                    sidebarPath: path.resolve(__dirname, 'MainDocs/sidebar.js'),
                     editUrl:
                         'https://github.com/your-org/your-project/edit/main/website/',
                 },
