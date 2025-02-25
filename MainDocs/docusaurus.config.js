@@ -19,7 +19,7 @@ module.exports = {
             },
             items: [
                 {
-                    to: '/MainDocs/docs/',
+                    to: path.resolve(__dirname, 'MainDocs/sidebars.js'),
                     activeBasePath: 'docs',
                     label: 'Docs',
                     position: 'left',
