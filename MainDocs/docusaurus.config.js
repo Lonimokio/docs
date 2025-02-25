@@ -20,7 +20,7 @@ module.exports = {
             items: [
                 {
                     to: path.resolve(__dirname, 'MainDocs/sidebars.js'),
-                    activeBasePath: 'docs',
+                    activeBasePath: path.resolve(__dirname, 'MainDocs/docs'),
                     label: 'Docs',
                     position: 'left',
                 },
@@ -39,7 +39,7 @@ module.exports = {
                     items: [
                         {
                             label: 'Getting Started',
-                            to: 'docs/',
+                            to: path.resolve(__dirname, 'MainDocs/docs/'),
                         },
                     ],
                 },
