@@ -21,12 +21,6 @@ jobs:
         
               - name: Fetch All Docs
                 run: ${{ github.workspace }}/scripts/fetch_docs.sh
-        
-              - name: Clear Destination Directory
-                run: rm -rf ${{ github.workspace }}/MainDocs/docs
-
-              - name: Clone Documentation Repository
-                run: git clone https://github.com/pvarki/docker-rasenmaeher-integration.git ${{ github.workspace }}/MainDocs/docs
 
               - name: Debug
                 run: | 
