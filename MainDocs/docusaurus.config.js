@@ -62,7 +62,7 @@ export default {
                     editUrl: 'https://github.com/your-org/your-project/edit/main/website/',
                 },
                 theme: {
-                    customCss: path.resolve(__dirname, 'MainDocs/src/css/custom.css'),
+                    customCss: path.resolve(__dirname, 'src/css/custom.css'),
                 },
             },
         ],
