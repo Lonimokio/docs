@@ -52,9 +52,9 @@ jobs:
 
               - name: Build Docusaurus Docs
                 run: |
-                  ls -R
+                  ls -R ${{ github.workspace }}/MainDocs/docs
                   npm run build -- --config ${{ github.workspace }}/MainDocs/docusaurus.config.js
-                  ls -R ${{ github.workspace }}/MainDocs/docs/build
+                  ls -R ${{ github.workspace }}/MainDocs/docs
                 working-directory: ${{ github.workspace }}/MainDocs
         
               - name: Package Docs for External Software
