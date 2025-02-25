@@ -59,8 +59,8 @@ jobs:
         
               - name: Build Docusaurus Docs
                 run: |
-                  working-directory: MainDocs
                   npm run build 
+                 working-directory: MainDocs
         
               - name: Package Docs for External Software
                 run: |
