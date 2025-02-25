@@ -1,8 +1,8 @@
 #!/bin/bash
 
 REPO_URL="https://github.com/pvarki/docker-rasenmaeher-integration.git"
-CLONE_PATH="docs/docs"
-OUTPUT_PATH="docs/docs"
+CLONE_PATH="MainDocs/docs"
+OUTPUT_PATH="MainDocs/docs"
 
 # Clone the main repository
 clone_repo() {
