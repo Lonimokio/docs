@@ -1,8 +1,8 @@
 #!/bin/bash
 
 REPO_URL="https://github.com/pvarki/docker-rasenmaeher-integration.git"
-CLONE_PATH=$(realpath "MainDocs/tmp_clone")
-OUTPUT_PATH=$(realpath "MainDocs/docs")
+CLONE_PATH="$GITHUB_WORKSPACE/tmp_clone"
+OUTPUT_PATH="$GITHUB_WORKSPACE/docs"
 
 # Clone the main repository
 clone_repo() {
@@ -12,14 +12,14 @@ clone_repo() {
     git clone --recurse-submodules "$REPO_URL" "$CLONE_PATH"
 }
 
-# Copy only .md files and necessary folder structure (Corrected)
+# Copy only .md files and necessary folder structure (Simplified)
 fetch_md_files() {
     local source_path=$1
     local dest_path=$2
 
     find "$source_path" -type f -name '*.md' -print0 | while IFS= read -r -d $'\0' md_file; do
-        # Create relative path manually
-        relative_path=$(echo "$md_file" | sed "s|^$source_path/||")  # <--- Key change
+        # Create relative path using simpler string manipulation
+        relative_path="${md_file#$source_path/}"  # Remove $source_path/ from the beginning
         dest_file="$dest_path/$relative_path"
         mkdir -p "$(dirname "$dest_file")"
         cp "$md_file" "$dest_file"
