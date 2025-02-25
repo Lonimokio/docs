@@ -20,7 +20,12 @@ fetch_md_files() {
     find "$source_path" -type f -name '*.md' -print0 | while IFS= read -r -d $'\0' md_file; do
         relative_path="${md_file#$source_path/}"
         dest_file="$dest_path/$relative_path"
-        mkdir -p "$(dirname "$dest_file")"
+
+        # Only create the directory if it doesn't exist
+        if [ ! -d "$(dirname "$dest_file")" ]; then
+            mkdir -p "$(dirname "$dest_file")"
+        fi
+
         cp "$md_file" "$dest_file"
         echo "Copied $md_file to $dest_file"
     done
