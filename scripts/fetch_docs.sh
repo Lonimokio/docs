@@ -4,7 +4,7 @@ REPO_URL="https://github.com/pvarki/docker-rasenmaeher-integration.git"
 CLONE_PATH="$GITHUB_WORKSPACE/tmp_clone"
 OUTPUT_PATH="$GITHUB_WORKSPACE/docs"
 
-# Clone the main repository
+# Clone the main repository using HTTPS
 clone_repo() {
     if [ -d "$CLONE_PATH" ]; then
         rm -rf "$CLONE_PATH"
@@ -30,10 +30,8 @@ fetch_md_files() {
         relative_path="${md_file#$source_path/}"
         dest_file="$dest_path/$relative_path"
 
-        # Only create the directory if it doesn't exist
-        if [ ! -d "$(dirname "$dest_file")" ]; then
-            mkdir -p "$(dirname "$dest_file")"
-        fi
+        # Create the directory and any necessary parents
+        mkdir -p "$(dirname "$dest_file")"
 
         cp "$md_file" "$dest_file"
         echo "Copied $md_file to $dest_file"
