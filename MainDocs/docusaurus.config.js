@@ -1,4 +1,4 @@
-// docusaurus.config.js
+const path = require('path');
 
 module.exports = {
     title: 'My Static Site',
@@ -19,7 +19,7 @@ module.exports = {
             },
             items: [
                 {
-                    to: '/ MainDocs/docs/',
+                    to: '/MainDocs/docs/',
                     activeBasePath: 'docs',
                     label: 'Docs',
                     position: 'left',
@@ -52,12 +52,12 @@ module.exports = {
             '@docusaurus/preset-classic',
             {
                 docs: {
-                    sidebarPath: require.resolve('/MainDocs/sidebars.js'),
+                    sidebarPath: path.resolve(__dirname, 'MainDocs/sidebars.js'),
                     editUrl:
                         'https://github.com/your-org/your-project/edit/main/website/',
                 },
                 theme: {
-                    customCss: require.resolve('/MainDocs/src/css/custom.css'),
+                    customCss: path.resolve(__dirname, 'MainDocs/src/css/custom.css'),
                 },
             },
         ],
