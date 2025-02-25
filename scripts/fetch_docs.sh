@@ -41,7 +41,7 @@ main() {
     echo "Repository cloned to $CLONE_PATH"
 
     echo "Fetching .md files from repository at $CLONE_PATH to $OUTPUT_PATH"
-    fetch_md_files "$CLONE_PATH" "$OUTPUT_PATH"
+    fetch_md_files "$CLONE_PATH/docs" "$OUTPUT_PATH"
 
     echo "Fetching .md files from submodules in repository at $CLONE_PATH to $OUTPUT_PATH"
     fetch_md_files_from_submodules
