@@ -1,70 +1,33 @@
 #!/bin/bash
 
+# Set the repository URL
 REPO_URL="https://github.com/pvarki/docker-rasenmaeher-integration.git"
-CLONE_PATH="$GITHUB_WORKSPACE/tmp_clone"
-OUTPUT_PATH="$GITHUB_WORKSPACE/MainDocs/docs"
 
-# Clone the main repository using HTTPS
-clone_repo() {
-    if [ -d "$CLONE_PATH" ]; then
-        rm -rf "$CLONE_PATH"
-    fi
-    git clone --recurse-submodules "$REPO_URL" "$CLONE_PATH"
-}
+# Set the destination directory
+DEST_DIR="$GITHUB_WORKSPACE/MainDocs/docs"
 
-# Change submodule URLs to HTTPS
-change_submodule_urls() {
-    cd "$CLONE_PATH"
-    git submodule foreach '
-        git config submodule.$name.url $(echo "$url" | sed "s/^git@github.com:/https:\/\/github.com\//")
-    '
-    cd -
-}
+# Create the destination directory if it doesn't exist
+mkdir -p "$DEST_DIR"
 
-# Copy only .md files and necessary folder structure
-fetch_md_files() {
-    local source_path=$1
-    local dest_path=$2
+# Clone the repository recursively using HTTPS
+git clone --recursive "$REPO_URL" "$DEST_DIR/repo"
 
-    find "$source_path" -type f -name '*.md' -print0 | while IFS= read -r -d $'\0' md_file; do
-        relative_path="${md_file#$source_path/}"
-        dest_file="$dest_path/$relative_path"
+# Process the files
+find "$DEST_DIR/repo" -type f -name "*.md" -print0 | while IFS= read -r -d $'\0' file; do
+  # Get the directory containing the .md file
+  dir=$(dirname "$file")
 
-        # Create the directory and any necessary parents
-        mkdir -p "$(dirname "$dest_file")"
+  # Check if the directory contains other .md files
+  if find "$dir" -type f -name "*.md" -print -quit | grep -q .; then
+    # Copy the directory and its contents
+    cp -r "$dir" "$DEST_DIR"
+  else
+    # Copy only the .md file
+    cp "$file" "$DEST_DIR"
+  fi
+done
 
-        cp "$md_file" "$dest_file"
-        echo "Copied $md_file to $dest_file"
-    done
-}
+# Remove the cloned repository
+rm -rf "$DEST_DIR/repo"
 
-# Fetch .md files from submodules
-fetch_md_files_from_submodules() {
-    git -C "$CLONE_PATH" submodule foreach --recursive '
-        submodule_path=$toplevel/$sm_path
-        fetch_md_files "$submodule_path" "$OUTPUT_PATH/$sm_path"
-    '
-}
-
-# Main function
-main() {
-    echo "Cloning repository from $REPO_URL to $CLONE_PATH"
-    clone_repo
-    echo "Repository cloned to $CLONE_PATH"
-
-    echo "Changing submodule URLs to HTTPS"
-    change_submodule_urls
-    echo "Submodule URLs changed to HTTPS"
-
-    echo "Fetching .md files from repository at $CLONE_PATH to $OUTPUT_PATH"
-    fetch_md_files "$CLONE_PATH" "$OUTPUT_PATH"
-
-    echo "Fetching .md files from submodules in repository at $CLONE_PATH to $OUTPUT_PATH"
-    fetch_md_files_from_submodules
-    echo "Fetching completed"
-
-    # Cleanup cloned repository
-    rm -rf "$CLONE_PATH"
-}
-
-main
+echo "Files processed and saved to $DEST_DIR"
