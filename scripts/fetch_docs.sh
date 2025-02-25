@@ -17,7 +17,7 @@ fetch_md_files() {
     local source_path=$1
     local dest_path=$2
 
-    find "$source_path" -type f -name '*.md' | while read -r md_file; do
+    find "$source_path" -type f -name '*.md' -print0 | while IFS= read -r -d $'\0' md_file; do
         relative_path=$(realpath --relative-to="$source_path" "$md_file")
         dest_file="$dest_path/$relative_path"
         mkdir -p "$(dirname "$dest_file")"
@@ -41,7 +41,7 @@ main() {
     echo "Repository cloned to $CLONE_PATH"
 
     echo "Fetching .md files from repository at $CLONE_PATH to $OUTPUT_PATH"
-    fetch_md_files "$CLONE_PATH/docs" "$OUTPUT_PATH"
+    fetch_md_files "$CLONE_PATH" "$OUTPUT_PATH"
 
     echo "Fetching .md files from submodules in repository at $CLONE_PATH to $OUTPUT_PATH"
     fetch_md_files_from_submodules
