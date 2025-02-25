@@ -1,43 +1,45 @@
-#!/bin/sh
-set -e
+#!/bin/bash
 
-# Ensure Git uses HTTPS instead of SSH for GitHub URLs
-git config --global url."https://github.com/".insteadOf "git@github.com:"
-
-# Define absolute paths
+# Set the repository URL
 REPO_URL="https://github.com/pvarki/docker-rasenmaeher-integration.git"
+
+# Set the destination directory
 DEST_DIR="$GITHUB_WORKSPACE/MainDocs/docs"
-TEMP_DIR="$GITHUB_WORKSPACE/repo_temp"
 
-# Clean up any previous clone and prepare a temporary directory
-rm -rf "$TEMP_DIR"
-mkdir -p "$TEMP_DIR"
-
-# Clone the main repository using HTTPS
-git clone "$REPO_URL" "$TEMP_DIR"
-
-# Change directory to the cloned repository
-cd "$TEMP_DIR"
-
-# Initialize and update all submodules recursively
-git submodule update --init --recursive
-
-# (Optional) Also update any .gitmodules files to replace SSH URLs with HTTPS.
-# This is mostly redundant due to the global git config above but included for completeness.
-find "$TEMP_DIR" -type f -name ".gitmodules" -exec sed -i 's/git@github.com:/https:\/\/github.com\//g' {} +
-
-# Sync submodules to ensure any changes from .gitmodules are applied
-git submodule sync --recursive
-git submodule update --init --recursive
-
-# Create the destination directory
+# Create the destination directory if it doesn't exist
 mkdir -p "$DEST_DIR"
 
-# Use rsync to copy only directories (and subdirectories) that contain .md files
-# It includes directories (needed for structure) and .md files, excluding everything else.
-rsync -av --prune-empty-dirs --include '*/' --include '*.md' --exclude '*' "$TEMP_DIR"/ "$DEST_DIR"/
+# Clone the repository (without recursing submodules initially)
+git clone "$REPO_URL" "$DEST_DIR/repo"
 
-# Clean up temporary repository clone
-rm -rf "$TEMP_DIR"
+# Change directory into the newly cloned repo
+cd "$DEST_DIR/repo"
 
-echo "Markdown files and folder structure copied to $DEST_DIR"
+# Configure git to use HTTPS for all submodules
+git config -f .gitmodules submodule.active.url "https"
+
+# Initialize and update the submodules (now using HTTPS)
+git submodule update --init --recursive
+
+# Change directory back to the script's original location
+cd -
+
+# Process the files (same as before)
+find "$DEST_DIR/repo" -type f -name "*.md" -print0 | while IFS= read -r -d $'\0' file; do
+  dir=$(dirname "$file")
+  if find "$dir" -type f -name "*.md" -print -quit | grep -q .; then
+    cp -r "$dir" "$DEST_DIR"
+  else
+    cp "$file" "$DEST_DIR"
+  fi
+done
+
+# Remove the cloned repository
+rm -rf "$DEST_DIR/repo"
+
+echo "Files processed and saved to $DEST_DIR"
+
+# Remove duplicate files/folders (if any)
+find "$DEST_DIR" -depth -name "repo" -exec rm -rf {} \;
+
+echo "Duplicate 'repo' folders removed"
