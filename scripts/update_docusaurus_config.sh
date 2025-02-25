@@ -35,6 +35,7 @@ generate_sidebar() {
 new_sidebar=$(generate_sidebar "$DOCS_DIR" "    ")
 
 # Update the docusaurus.config.js file
-sed -i "/sidebarPath:/a \ \ \ \ \ \ \ \ items: [\n$new_sidebar\ \ \ \ \ \ \ \ ]," "$CONFIG_FILE"
+escaped_sidebar=$(echo "$new_sidebar" | sed ':a;N;$!ba;s/\n/\\n/g')
+sed -i "/sidebarPath:/a \ \ \ \ \ \ \ \ items: [\n$escaped_sidebar\ \ \ \ \ \ \ \ ]," "$CONFIG_FILE"
 
 echo "Docusaurus config updated with new sidebar structure."
