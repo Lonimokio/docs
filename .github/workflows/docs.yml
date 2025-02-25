@@ -52,10 +52,17 @@ jobs:
                   name: docs-raw
                   path: ${{ github.workspace }}/MainDocs/docs/
         
+              - name: Cache node_modules
+                uses: actions/cache@v3
+                with:
+                  path: ${{ github.workspace }}/MainDocs/node_modules
+                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+                  restore-keys: |
+                    ${{ runner.os }}-node-
+        
               - name: Install Docusaurus
-                run: |
-                  npm install --global docusaurus-init
-                  npm install
+                run: npm install
+                working-directory: ${{ github.workspace }}/MainDocs
         
               - name: Build Docusaurus Docs
                 run: |
