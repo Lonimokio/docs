@@ -12,12 +12,21 @@ clone_repo() {
     git clone --recurse-submodules "$REPO_URL" "$CLONE_PATH"
 }
 
-# Copy only .md files and necessary folder structure (Corrected)
+# Change submodule URLs to HTTPS
+change_submodule_urls() {
+    cd "$CLONE_PATH"
+    git submodule foreach '
+        git config submodule.$name.url $(echo "$url" | sed "s/^git@github.com:/https:\/\/github.com\//")
+    '
+    cd -
+}
+
+# Copy only .md files and necessary folder structure
 fetch_md_files() {
     local source_path=$1
     local dest_path=$2
 
-    find "$source_path" -type f -print0 | grep '\.md$' | while IFS= read -r -d $'\0' md_file; do
+    find "$source_path" -type f -name '*.md' -print0 | while IFS= read -r -d $'\0' md_file; do
         relative_path="${md_file#$source_path/}"
         dest_file="$dest_path/$relative_path"
 
@@ -31,12 +40,11 @@ fetch_md_files() {
     done
 }
 
-# Fetch .md files from submodules (Corrected)
+# Fetch .md files from submodules
 fetch_md_files_from_submodules() {
     git -C "$CLONE_PATH" submodule foreach --recursive '
         submodule_path=$toplevel/$sm_path
-        # Corrected dest_path for submodules:
-        fetch_md_files "$submodule_path" "$OUTPUT_PATH/$sm_path" 
+        fetch_md_files "$submodule_path" "$OUTPUT_PATH/$sm_path"
     '
 }
 
@@ -45,6 +53,10 @@ main() {
     echo "Cloning repository from $REPO_URL to $CLONE_PATH"
     clone_repo
     echo "Repository cloned to $CLONE_PATH"
+
+    echo "Changing submodule URLs to HTTPS"
+    change_submodule_urls
+    echo "Submodule URLs changed to HTTPS"
 
     echo "Fetching .md files from repository at $CLONE_PATH to $OUTPUT_PATH"
     fetch_md_files "$CLONE_PATH" "$OUTPUT_PATH"
