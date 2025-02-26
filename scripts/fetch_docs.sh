@@ -20,14 +20,8 @@ mkdir -p "$DEST_DIR"
 git clone "$REPO_URL" "$TEMP_DIR"
 cd "$TEMP_DIR"
 
-# Debugging: Ensure we are in the correct directory
-pwd
-
 # Update submodules recursively (they’ll be cloned via HTTPS thanks to our global config)
 git submodule update --init --recursive
-
-# Debugging: Check if Markdown files exist
-ls -R "$TEMP_DIR"
 
 # Copy only Markdown files (case-insensitive) while preserving the directory structure
 rsync -avm --include='*/' --include='*.md' --exclude='*' . "$DEST_DIR"
