@@ -120,15 +120,6 @@ jobs:
                 git commit -m "Update Docusaurus docs" || echo "No changes to commit"
               working-directory: ${{ github.workspace }}/MainDocs
 
-            - name: Debug Git State
-              run: |
-                git status
-                git log -n 3
-                git remote -v
-                git branch -vv
-                git push --dry-run
-              working-directory: ${{ github.workspace }}/MainDocs
-
             - name: Push Changes
               run: |
                 git pull --rebase origin main
