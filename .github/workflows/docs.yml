@@ -122,7 +122,8 @@ jobs:
 
               - name: Push Changes
                 run: |
-                  git push origin main
+                   git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+                   git push origin main
                 env:
                   GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
                 working-directory: ${{ github.workspace }}/MainDocs
