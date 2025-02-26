@@ -83,16 +83,13 @@ jobs:
                 env:
                   GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
 
+              - name: Add Changes
+                run: git add .
+                working-directory: ${{ github.workspace }}/MainDocs
+                env:
+                  GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+
               - name: Commit and Push Changes
                 uses: actions/checkout@v4
                 with:
                   token: ${{ secrets.PAT_TOKEN }}
-              - run: |
-                  git config --global user.name 'github-actions[bot]'
-                  git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-                  git remote set-url origin https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}
-                  git add ${{ github.workspace }}/MainDocs/docs
-                  git commit -m "Update Docusaurus docs"
-                  git push
-                env:
-                  GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
