@@ -85,8 +85,8 @@ jobs:
 
               - name: Configure Git User
                 run: |
-                  git config --global user.email "you@example.com"
-                  git config --global user.name "Your Name"
+                  git config --global user.email "arttu.mutka@gmail.com"
+                  git config --global user.name "Lonimokio"
                 env:
                   GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
   
