@@ -92,8 +92,29 @@ jobs:
                 with:
                   persist-credentials: false
                   fetch-depth: 0
-        
-              - name: Commit & Push Changes
+
+              - name: Configure Git
+                run: |
+                  git config --global user.name "github-actions[bot]"
+                  git config --global user.email "github-actions[bot]@users.noreply.github.com"
+                working-directory: ${{ github.workspace }}/MainDocs
+
+              - name: Check for Changes
+                run: |
+                  git status
+                  ls -R ${{ github.workspace }}/MainDocs/docs
+                working-directory: ${{ github.workspace }}/MainDocs
+
+              - name: Add Changes
+                run: git add .
+                working-directory: ${{ github.workspace }}/MainDocs
+
+              - name: Commit Changes
+                run: |
+                  git commit -m "Update Docusaurus docs" || echo "No changes to commit"
+                working-directory: ${{ github.workspace }}/MainDocs
+
+              - name: Push Changes
                 uses: actions-js/push@master
                 with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
