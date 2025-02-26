@@ -18,18 +18,19 @@ mkdir -p "$DEST_DIR"
 
 # Clone the main repository (using HTTPS) into TEMP_DIR
 git clone "$REPO_URL" "$TEMP_DIR"
-
-# Copy only Markdown files (case-insensitive) preserving the directory structure.
-# The --parents flag recreates the entire relative path for each found file.
-find "$TEMP_DIR" -type f -iname '*.md' -exec cp --parents {} "$DEST_DIR" \;
-
 cd "$TEMP_DIR"
+
+# Debugging: Ensure we are in the correct directory
+pwd
 
 # Update submodules recursively (they’ll be cloned via HTTPS thanks to our global config)
 git submodule update --init --recursive
 
-# Copy only Markdown files (case-insensitive) preserving the directory structure from submodules.
-find . -type f -iname '*.md' -exec cp --parents {} "$DEST_DIR" \;
+# Debugging: Check if Markdown files exist
+ls -R "$TEMP_DIR"
+
+# Copy only Markdown files (case-insensitive) while preserving the directory structure
+rsync -avm --include='*/' --include='*.md' --exclude='*' . "$DEST_DIR"
 
 # Remove empty directories
 find "$DEST_DIR" -type d -empty -delete
