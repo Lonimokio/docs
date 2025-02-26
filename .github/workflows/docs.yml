@@ -83,27 +83,23 @@ jobs:
                 env:
                   GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
 
-              - name: Configure Git User
+    commit-docs:
+        runs-on: ubuntu-latest
+        needs: build
+        steps:
+              - name: Checkout Repository
+                uses: actions/checkout@v4
+                with:
+                  persist-credentials: false
+                  fetch-depth: 0
+        
+              - name: Create Local Changes
                 run: |
-                  git config --global user.email "arttu.mutka@gmail.com"
-                  git config --global user.name "Lonimokio"
-                env:
-                  GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-  
-              - name: Add Changes
-                run: git add .
-                working-directory: ${{ github.workspace }}/MainDocs
-                env:
-                  GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-  
-              - name: Commit Changes
-                run: git commit -m "Automated commit of built docs"
-                working-directory: ${{ github.workspace }}/MainDocs
-                env:
-                  GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-  
-              - name: Push Changes
-                run: git push
-                working-directory: ${{ github.workspace }}/MainDocs
-                env:
-                  GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+                  cp -r ${{ github.workspace }}/MainDocs/docs/build/* ${{ github.workspace }}/docs/
+        
+              - name: Commit & Push Changes
+                uses: actions-js/push@master
+                with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  branch: main
+                  force: true
