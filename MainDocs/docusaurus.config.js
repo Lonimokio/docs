@@ -20,12 +20,12 @@ export default {
             title: 'My Static Site',
             logo: {
                 alt: 'Site Logo',
-                src: 'img/logo.svg', // Use relative path
+                src: 'img/logo.svg', // does not work
             },
             items: [
                 {
-                    to: 'docs/', // Use relative path
-                    activeBasePath: 'docs/', // Use relative path
+                    to: '/docs', // Use relative path
+                    activeBasePath: '/docs', // Use relative path
                     label: 'Docs',
                     position: 'left',
                 },
@@ -44,7 +44,7 @@ export default {
                     items: [
                         {
                             label: 'Getting Started',
-                            to: 'docs/', // Use relative path
+                            to: '/docs', // Use relative path
                         },
                     ],
                 },
