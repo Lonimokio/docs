@@ -83,6 +83,13 @@ jobs:
                 env:
                   GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
 
+              - name: Configure Git User
+                run: |
+                  git config --global user.email "you@example.com"
+                  git config --global user.name "Your Name"
+                env:
+                  GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+  
               - name: Add Changes
                 run: git add .
                 working-directory: ${{ github.workspace }}/MainDocs
