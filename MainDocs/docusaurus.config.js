@@ -12,7 +12,7 @@ export default {
     baseUrl: '/', // Ensure this is correct for your hosting setup
     onBrokenLinks: 'warn',
     onBrokenMarkdownLinks: 'warn',
-    favicon: path.resolve(__dirname, 'MainDocs/img/favicon.ico'),
+    favicon: 'img/favicon.ico', // Use relative path
     organizationName: 'your-org', // Usually your GitHub org/user name.
     projectName: 'your-project', // Usually your repo name.
     themeConfig: {
@@ -20,12 +20,12 @@ export default {
             title: 'My Static Site',
             logo: {
                 alt: 'Site Logo',
-                src: path.resolve(__dirname, 'MainDocs/img/logo.svg'),
+                src: 'img/logo.svg', // Use relative path
             },
             items: [
                 {
-                    to: path.resolve(__dirname, 'MainDocs/docs'),
-                    activeBasePath: path.resolve(__dirname, 'MainDocs/docs'),
+                    to: 'docs/', // Use relative path
+                    activeBasePath: 'docs/', // Use relative path
                     label: 'Docs',
                     position: 'left',
                 },
@@ -44,7 +44,7 @@ export default {
                     items: [
                         {
                             label: 'Getting Started',
-                            to: path.resolve(__dirname, 'MainDocs/docs/'),
+                            to: 'docs/', // Use relative path
                         },
                     ],
                 },
@@ -57,12 +57,12 @@ export default {
             '@docusaurus/preset-classic',
             {
                 docs: {
-                    path: path.resolve(__dirname, 'docs'),
-                    sidebarPath: path.resolve(__dirname, 'sidebar.js'),
+                    path: path.resolve(__dirname, 'docs'), // Keep absolute path
+                    sidebarPath: path.resolve(__dirname, 'sidebar.js'), // Keep absolute path
                     editUrl: 'https://github.com/your-org/your-project/edit/main/website/',
                 },
                 theme: {
-                    customCss: path.resolve(__dirname, 'src/css/custom.css'),
+                    customCss: path.resolve(__dirname, 'src/css/custom.css'), // Keep absolute path
                 },
             },
         ],
