@@ -120,10 +120,17 @@ jobs:
                 git commit -m "Update Docusaurus docs" || echo "No changes to commit"
               working-directory: ${{ github.workspace }}/MainDocs
 
-            - name: Push Changes
+            - name: Configure Git
               run: |
-                git pull --rebase origin main
-                git push origin main
+                git config --global user.name "github-actions[bot]"
+                git config --global user.email "github-actions[bot]@users.noreply.github.com"
+                git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Lonimokio/docs.git
+            
+            - name: Pull Latest Changes
+              run: git pull --rebase origin main
+            
+            - name: Push Changes
+              run: git push origin main
               working-directory: ${{ github.workspace }}/MainDocs
               env:
                 GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
