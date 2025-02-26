@@ -88,8 +88,15 @@ jobs:
                 working-directory: ${{ github.workspace }}/MainDocs
                 env:
                   GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-
-              - name: Commit and Push Changes
-                uses: actions/checkout@v4
-                with:
-                  token: ${{ secrets.PAT_TOKEN }}
+  
+              - name: Commit Changes
+                run: git commit -m "Automated commit of built docs"
+                working-directory: ${{ github.workspace }}/MainDocs
+                env:
+                  GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+  
+              - name: Push Changes
+                run: git push
+                working-directory: ${{ github.workspace }}/MainDocs
+                env:
+                  GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
