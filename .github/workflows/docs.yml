@@ -93,10 +93,6 @@ jobs:
                   persist-credentials: false
                   fetch-depth: 0
         
-              - name: Create Local Changes
-                run: |
-                  cp -r ${{ github.workspace }}/MainDocs/docs/build/* ${{ github.workspace }}/docs/
-        
               - name: Commit & Push Changes
                 uses: actions-js/push@master
                 with:
