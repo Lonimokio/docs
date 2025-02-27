@@ -6,26 +6,26 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 export default {
-    title: 'My Static Site',
-    tagline: 'Static sites made easy',
+    title: 'Static docs',
+    tagline: 'documentation for rasenmaher',
     url: 'https://example.com', // Update to a generic URL
     baseUrl: '/', // Ensure this is correct for your hosting setup
     onBrokenLinks: 'warn',
     onBrokenMarkdownLinks: 'warn',
-    favicon: 'img/favicon.ico', // Use relative path
-    organizationName: 'your-org', // Usually your GitHub org/user name.
-    projectName: 'your-project', // Usually your repo name.
+    favicon: 'img/favicon.ico', 
+    organizationName: 'PVarki', // Usually your GitHub org/user name.
+    projectName: 'Rasenmaeher', // Usually your repo name.
     themeConfig: {
         navbar: {
-            title: 'My Static Site',
+            title: 'Rasenmaeher',
             logo: {
                 alt: 'Site Logo',
                 src: 'img/logo.svg', // does not work
             },
             items: [
                 {
-                    to: '/docs', // Use relative path
-                    activeBasePath: '/docs', // Use relative path
+                    to: '/docs', 
+                    activeBasePath: '/docs',
                     label: 'Docs',
                     position: 'left',
                 },
@@ -44,7 +44,7 @@ export default {
                     items: [
                         {
                             label: 'Getting Started',
-                            to: '/docs', // Use relative path
+                            to: '/docs',
                         },
                     ],
                 },

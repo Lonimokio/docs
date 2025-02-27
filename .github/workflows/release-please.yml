@@ -1,0 +1,28 @@
+name: Release Please
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    - name: Install release-please
+      run: npm install -g release-please
+
+    - name: Release Please
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+      run: |
+        release-please release-pr --token $GITHUB_TOKEN --repo-url $GITHUB_REPOSITORY
+        release-please github-release --token $GITHUB_TOKEN --repo-url $GITHUB_REPOSITORY
