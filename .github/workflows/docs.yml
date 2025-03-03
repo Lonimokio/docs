@@ -51,7 +51,7 @@ jobs:
                 run: echo "::set-output name=repo_owner::$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')"
         
               - name: Build Docker Image
-                run: docker build -t ghcr.io/${{ steps.repo_owner_lowercase.outputs.repo_owner }}/docs:${{ github.run_number }} .
+                run: docker build -t ghcr.io/${{ steps.repo_owner_lowercase.outputs.repo_owner }}/docs:${{ github.run_number }} -f ${{ github.workspace }}/MainDocs/Dockerfile ${{ github.workspace }}/MainDocs
                 working-directory: ${{ github.workspace }}/MainDocs
         
               - name: Log in to GitHub Container Registry
