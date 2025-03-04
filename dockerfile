@@ -1,22 +1,22 @@
 FROM node:16
 
 # Set the working directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
+# Copy the Docusaurus configuration and source files
+COPY MainDocs/docusaurus.config.js ./
+COPY MainDocs/sidebar.js ./
+COPY MainDocs/src ./src
+COPY MainDocs/docs ./docs
 
 # Install dependencies
-RUN npm install
+RUN npm install --global docusaurus
 
-# Copy the rest of the application
-COPY . .
+# Build the Docusaurus site
+RUN npm run build -- --config docusaurus.config.js --out-dir docs/build
 
-# Build the Docusaurus documentation
-RUN npm run build -- --config ./docusaurus.config.js --out-dir ./docs/build
+# Expose the port for the static site
+EXPOSE 3000
 
-# Expose the build directory as a volume
-VOLUME [ "/usr/src/app/docs/build" ]
-
-# Command to run when starting the container
-CMD ["npm", "run", "serve"]
+# Command to serve the built site
+CMD ["npx", "serve", "docs/build"]
