@@ -9,7 +9,7 @@ export default {
     title: 'Static docs',
     tagline: 'documentation for rasenmaher',
     url: 'https://example.com', // Update to a generic URL
-    baseUrl: '/', // Ensure this is correct for your hosting setup
+    baseUrl: '/usr/share/nginx/html/', // Ensure this is correct for your hosting setup
     onBrokenLinks: 'warn',
     onBrokenMarkdownLinks: 'warn',
     favicon: 'img/favicon.ico', 
