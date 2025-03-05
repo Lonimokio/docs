@@ -27,6 +27,48 @@ jobs:
           ls -R ${{ github.workspace }}/MainDocs
           ls
 
+  commit-docs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    needs: pull-docs
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        working-directory: ${{ github.workspace }}/MainDocs
+
+      - name: Check for Changes
+        run: |
+          git status
+          ls -R ${{ github.workspace }}/MainDocs/docs
+        working-directory: ${{ github.workspace }}/MainDocs
+
+      - name: Add Changes
+        run: git add .
+        working-directory: ${{ github.workspace }}/MainDocs
+
+      - name: Commit Changes
+        run: |
+          git commit -m "Update Docusaurus docs" || echo "No changes to commit"
+        working-directory: ${{ github.workspace }}/MainDocs
+
+      - name: Pull Latest Changes
+        run: git pull --rebase origin main
+
+      - name: Push Changes
+        run: git push origin main
+        working-directory: ${{ github.workspace }}/MainDocs
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+
   build:
     runs-on: ubuntu-latest
     needs: pull-docs
@@ -68,45 +110,3 @@ jobs:
 
       - name: Push Docker Image to Docker Hub
         run: docker push my-docusaurus-image
-
-  commit-docs:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    needs: build
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-          fetch-depth: 0
-
-      - name: Configure Git
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        working-directory: ${{ github.workspace }}/MainDocs
-
-      - name: Check for Changes
-        run: |
-          git status
-          ls -R ${{ github.workspace }}/MainDocs/docs
-        working-directory: ${{ github.workspace }}/MainDocs
-
-      - name: Add Changes
-        run: git add .
-        working-directory: ${{ github.workspace }}/MainDocs
-
-      - name: Commit Changes
-        run: |
-          git commit -m "Update Docusaurus docs" || echo "No changes to commit"
-        working-directory: ${{ github.workspace }}/MainDocs
-
-      - name: Pull Latest Changes
-        run: git pull --rebase origin main
-
-      - name: Push Changes
-        run: git push origin main
-        working-directory: ${{ github.workspace }}/MainDocs
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
