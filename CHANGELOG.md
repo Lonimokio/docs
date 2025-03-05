@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/Lonimokio/docs/compare/v1.1.1...v1.1.2) (2025-03-05)
+
+
+### Bug Fixes
+
+* **sidebar:** prepend base URL to document IDs for correct linking ([a079703](https://github.com/Lonimokio/docs/commit/a07970368bedf82c8d1f3a7d0e3a1bc55c951f70))
+
 ## [1.1.1](https://github.com/Lonimokio/docs/compare/v1.1.0...v1.1.1) (2025-03-05)
 
 
