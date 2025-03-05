@@ -2,8 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Path to your docs folder
-const docsDir = path.resolve(__dirname, 'docs');
-const baseUrl = '/docs/'; // Ensure this matches your Docusaurus config
+const docsDir = 'docs';
 
 /**
  * Recursively scans a directory to build the sidebar items.
@@ -30,7 +29,7 @@ function getSidebarItems(dir) {
       const readmePath = path.join(fullPath, 'README.md');
       if (fs.existsSync(readmePath)) {
         // Compute the doc ID for README.md (relative to docsDir)
-        const readmeId = baseUrl + path
+        const readmeId = path
           .relative(docsDir, readmePath)
           .replace(/\\/g, '/')
           .replace(/\.md$/, '');
@@ -55,7 +54,7 @@ function getSidebarItems(dir) {
       }
     } else if (stats.isFile() && entry.toLowerCase().endsWith('.md')) {
       // Compute the doc ID relative to the docs folder (remove .md extension)
-      const docId = baseUrl + path
+      const docId = path
         .relative(docsDir, fullPath)
         .replace(/\\/g, '/')
         .replace(/\.md$/, '');
