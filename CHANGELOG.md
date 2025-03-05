@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/Lonimokio/docs/compare/v1.0.0...v1.0.1) (2025-03-05)
+
+
+### Bug Fixes
+
+* **sidebar:** handle child items correctly in sidebar generation ([1a8f219](https://github.com/Lonimokio/docs/commit/1a8f219aa5db549a36fbfa69fafd58251b4917b6))
+
 ## 1.0.0 (2025-02-27)
 
 
