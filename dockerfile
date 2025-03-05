@@ -1,4 +1,5 @@
-FROM node:18
+# filepath: /home/lonimokio/Programming/testing/docs/dockerfile
+FROM node:18 AS builder
 
 WORKDIR /app
 
@@ -17,8 +18,8 @@ COPY MainDocs/docs ./docs
 # Build the Docusaurus site
 RUN npm run build -- --config docusaurus.config.js --out-dir docs/build
 
-# Expose the port for the static site
-EXPOSE 3000
-
-# Start the Docusaurus site
-CMD ["npm", "start"]
+# Use Nginx to serve the static files
+FROM nginx:alpine
+COPY --from=builder /app/docs/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

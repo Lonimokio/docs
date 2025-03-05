@@ -36,6 +36,9 @@ export default {
                 },
             ],
         },
+        devServer: {
+            host: '0.0.0.0',
+          },
         footer: {
             style: 'dark',
             links: [
