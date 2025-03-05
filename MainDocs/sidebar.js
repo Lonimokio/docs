@@ -45,7 +45,7 @@ function getSidebarItems(dir) {
             (item) => item !== readmeId
           ),
         });
-      } else {
+      } else if (childItems.length > 0) {
         items.push({
           type: 'category',
           label: entry,
