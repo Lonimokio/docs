@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.0](https://github.com/Lonimokio/docs/compare/v1.0.1...v1.1.0) (2025-03-05)
+
+
+### Features
+
+* **docker:** update Dockerfile to use multi-stage build and serve with Nginx ([5aa0ee2](https://github.com/Lonimokio/docs/commit/5aa0ee23bf8fcb2711541e0ea36533dbace4f048))
+* **docusaurus:** configure devServer to listen on all interfaces ([5aa0ee2](https://github.com/Lonimokio/docs/commit/5aa0ee23bf8fcb2711541e0ea36533dbace4f048))
+
 ## [1.0.1](https://github.com/Lonimokio/docs/compare/v1.0.0...v1.0.1) (2025-03-05)
 
 
