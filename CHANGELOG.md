@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.1](https://github.com/Lonimokio/docs/compare/v1.1.0...v1.1.1) (2025-03-05)
+
+
+### Bug Fixes
+
+* **workflow:** update docs workflow to download built artifact and configure git remote ([97bd2e7](https://github.com/Lonimokio/docs/commit/97bd2e7b0b0151058f1e636a2b206d7a1471092a))
+* **workflow:** update job dependencies and adjust base URL in Docusaurus config ([0078f50](https://github.com/Lonimokio/docs/commit/0078f50dd0b2728a4d8a2b1187ec08748fff3507))
+
 ## [1.1.0](https://github.com/Lonimokio/docs/compare/v1.0.1...v1.1.0) (2025-03-05)
 
 
