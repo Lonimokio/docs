@@ -20,6 +20,7 @@ RUN npm run build -- --config docusaurus.config.js --out-dir docs/build
 
 # Use Nginx to serve the static files
 FROM nginx:alpine
+RUN rm -rf /usr/share/nginx/html/*
 COPY --from=builder /app/docs/build /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
