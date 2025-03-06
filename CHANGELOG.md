@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.0](https://github.com/Lonimokio/docs/compare/v1.4.0...v1.5.0) (2025-03-06)
+
+
+### Features
+
+* **docker:** implement SSL support with Certbot and update Nginx configuration ([ca26c32](https://github.com/Lonimokio/docs/commit/ca26c3261c8a563c99ecffb77abb772ade828283))
+* **nginx:** add SSL support and enhance error handling in configuration ([40fd4ff](https://github.com/Lonimokio/docs/commit/40fd4ff0cc7d505cce1b7028bfec449e420e2326))
+
 ## [1.4.0](https://github.com/Lonimokio/docs/compare/v1.3.0...v1.4.0) (2025-03-06)
 
 
