@@ -24,7 +24,7 @@ cd "$TEMP_DIR"
 git submodule update --init --recursive
 
 # Copy only Markdown files (case-insensitive) while preserving the directory structure
-rsync -avm --include='*/' --include='*.md' --exclude='*' . "$DEST_DIR"
+find . -iname "*.md" -exec rsync -R {} "$DEST_DIR" \;
 
 # Remove empty directories
 find "$DEST_DIR" -type d -empty -delete
