@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/Lonimokio/docs/compare/v1.5.0...v1.5.1) (2025-03-06)
+
+
+### Bug Fixes
+
+* **fetch_docs:** replace rsync with find for Markdown file copying ([6b8bc83](https://github.com/Lonimokio/docs/commit/6b8bc8307643b9b542eccc605bc34582b88119b6))
+
 ## [1.5.0](https://github.com/Lonimokio/docs/compare/v1.4.0...v1.5.0) (2025-03-06)
 
 
