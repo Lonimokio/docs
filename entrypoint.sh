@@ -1,4 +1,3 @@
-# filepath: /home/lonimokio/Programming/testing/docs/entrypoint.sh
 #!/bin/sh
 
 # Create the necessary directories for Certbot
