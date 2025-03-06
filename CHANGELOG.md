@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.2.0](https://github.com/Lonimokio/docs/compare/v1.1.2...v1.2.0) (2025-03-06)
+
+
+### Features
+
+* **docs:** enhance README and add Docker support for Nginx hosting ([bd53375](https://github.com/Lonimokio/docs/commit/bd53375a21f2c79a655a2a2de7a6193bdd7eea3a))
+
+
+### Bug Fixes
+
+* **config:** update base URL in Docusaurus config for correct hosting setup ([c8faf5f](https://github.com/Lonimokio/docs/commit/c8faf5f7658a6bad6383eccb6d63fd29b652a982))
+* **sidebar:** simplify path handling by removing base URL from document IDs ([f64cf23](https://github.com/Lonimokio/docs/commit/f64cf239a1033bd0222b049d7b6501332b83435f))
+* **workflow:** streamline Docusaurus documentation update process in GitHub Actions ([dbbdfea](https://github.com/Lonimokio/docs/commit/dbbdfea957ae13b7889f92250ce1a64949ed79da))
+
 ## [1.1.2](https://github.com/Lonimokio/docs/compare/v1.1.1...v1.1.2) (2025-03-05)
 
 
