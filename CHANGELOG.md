@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/Lonimokio/docs/compare/v1.2.1...v1.3.0) (2025-03-06)
+
+
+### Features
+
+* **nginx:** set default index file for documentation location ([f24bbab](https://github.com/Lonimokio/docs/commit/f24bbab9a640ed721bec70b46bfdab16269716e1))
+
 ## [1.2.1](https://github.com/Lonimokio/docs/compare/v1.2.0...v1.2.1) (2025-03-06)
 
 
