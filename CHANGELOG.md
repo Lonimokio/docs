@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/Lonimokio/docs/compare/v1.2.0...v1.2.1) (2025-03-06)
+
+
+### Bug Fixes
+
+* **nginx:** change root directive to alias for correct document serving ([3fd5711](https://github.com/Lonimokio/docs/commit/3fd5711b76375bbf84d8fcd8f481643953603c91))
+
 ## [1.2.0](https://github.com/Lonimokio/docs/compare/v1.1.2...v1.2.0) (2025-03-06)
 
 
