@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.1](https://github.com/Lonimokio/docs/compare/v1.5.0...v1.5.1) (2025-03-10)
+
+
+### Bug Fixes
+
+* **fetch_docs:** replace rsync with find for Markdown file copying ([6b8bc83](https://github.com/Lonimokio/docs/commit/6b8bc8307643b9b542eccc605bc34582b88119b6))
+* **nginx:** update location block to use alias for home documentation ([21295ab](https://github.com/Lonimokio/docs/commit/21295ab63b7debeb94011afc11ba1a00dd405ea7))
+
 ## [1.5.0](https://github.com/Lonimokio/docs/compare/v1.4.0...v1.5.0) (2025-03-06)
 
 
