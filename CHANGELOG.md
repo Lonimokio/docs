@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.2](https://github.com/Lonimokio/docs/compare/v1.5.1...v1.5.2) (2025-03-10)
+
+
+### Bug Fixes
+
+* **nginx:** change location block to use root instead of alias for home documentation ([74b3b10](https://github.com/Lonimokio/docs/commit/74b3b10e2c082bd6b181d433dbed9c1ddb507e50))
+
 ## [1.5.1](https://github.com/Lonimokio/docs/compare/v1.5.0...v1.5.1) (2025-03-10)
 
 
